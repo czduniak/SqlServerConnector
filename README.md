@@ -1,5 +1,5 @@
-##Arnold Arboretum *BG-BASE* - SQL Server Connector
-###Overview
+## Arnold Arboretum *BG-BASE* - SQL Server Connector
+### Overview
 The Arnold Arboretum BG-BASE - SQL Server Connector, referred to as *BG-Connector* from here on out, is a library that is written in Python to faciliate the movement of data
 bewtween the Arboretum's BGBASE database and its ArcGIS SDE database. The BG-Connector contains 2 files that are launched from the Python executable
 to move the Arboretum's data: **_sqlserver_to_sde.py_** and **_sde_to_xml.py_**. The code is controlled by a configuration file, **_config.py_**, that indicates
@@ -7,7 +7,7 @@ where various data sources exist, as well as other settings, such as the locatio
 
 BG-Connector uses Python 2.7, the 32-bit Python ODBC client (pyodbc) to interact with the Warehouse database and the ArcGIS Python library (arcpy) to interact with the ArcGIS database.
 
-###General System Architecture
+### General System Architecture
 The BG-Connector is made up of multiple systems. Arnold Arboretum uses *BG-BASE* to maintain its plant information, and uses ArcGIS Server to make its data spatially available.
 A non-spatial database sits in between the *BG-BASE* database and ArcGIS database that is critical in getting the changes from *BG-BASE* to ArcGIS. This non-spatial database
 is a SQL Server database, and the database is configured to use Change Data Capture (CDC) to track changes.
@@ -25,7 +25,7 @@ the internal *BG-BASE* database.
 
 *It is important to note that the BG-Connector only supports updates that are made in the ArcGIS database. New records from ArcGIS will not be applied to BG-BASE.*
 
-###Code Structure
+### Code Structure
 BG-Connector has the following code structure:
 
 * *config.py*: This top level file is a Python dictionary that configures the BG-Connector.
@@ -44,12 +44,12 @@ BG-Connector has the following code structure:
 		* *DateUtil*: Python class that provides helper functions for Date/Time objects.
 		* *LockFile*: Python class that helps the Connector from running in multiple instances.
 
-###Data Preparation
+### Data Preparation
 First, a SQL Server instance of the *BG-BASE* database must be created. This is standard functionality within *BG-BASE*, implemented by *BG-BASE*.
 
 Once the data is ready in Warehouse, CDC must then be enabled per table that is to be managed in ArcGIS. 
 
-###CDC Setup
+### CDC Setup
 The following are steps in order, to set up the SQL Server to work as a BG-Connector.
 
 **Warehouse Database Enable CDC**  
@@ -91,7 +91,7 @@ Reference: http://msdn.microsoft.com/en-us/library/bb500305.aspx
 CDC SYNC TABLES
 There's a table named dbo.SDE_SYNC_TABLES in Warehouse SQLServer 2008 database that contains records of CDC table names and functions, and SDE feature class names that controls the python code. The python code iterates through this table, and calls the CDC function to get the changes from the CDC table and put them in the feature class. -6/7/13 Jason Sardano
 
-##SQL Server Agent##
+## SQL Server Agent##
 Once you have the database and desired tables with CDC’s enabled, you must start SQL Server Agent or the changes will not be captured.  
 To start the Agent:   
 1. On the Start menu, point to All Programs, point to Microsoft SQL Server 2008 R2, point to Configuration Tools, and then click SQL Server Configuration Manager.  
@@ -147,5 +147,5 @@ Step 6: Specify the SDE keywords for the replica.
 Step 7: Press the Finish button to create the replica.
 ![Create Replica Step 7](doc/CreateReplicaStep7.png)
 
-###Configure the Connector
+### Configure the Connector
 **_Jason TODO: Describe the contents of the connector_**
